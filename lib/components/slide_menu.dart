@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onyoutube/components/info_card.dart';
-import 'package:onyoutube/components/slide_menu_tile.dart';
-import 'package:onyoutube/model/rive_asset.dart';
-import 'package:onyoutube/rive_utils.dart';
 import 'package:rive/rive.dart';
+
+import '../model/rive_asset.dart';
+import '../rive_utils.dart';
+import 'info_card.dart';
+import 'slide_menu_tile.dart';
 
 class SlideMenu extends StatefulWidget {
   const SlideMenu({super.key});
@@ -50,7 +50,7 @@ class _SlideMenuState extends State<SlideMenu> {
                     },
                     press: () {
                       menu.input!.change(true);
-                      Future.delayed(Duration(seconds: 1), () {
+                      Future.delayed(const Duration(seconds: 1), () {
                         menu.input!.change(false);
                       });
                       setState(() {
@@ -79,7 +79,7 @@ class _SlideMenuState extends State<SlideMenu> {
                     },
                     press: () {
                       menu.input!.change(true);
-                      Future.delayed(Duration(seconds: 1), () {
+                      Future.delayed(const Duration(seconds: 1), () {
                         menu.input!.change(false);
                       });
                       setState(() {

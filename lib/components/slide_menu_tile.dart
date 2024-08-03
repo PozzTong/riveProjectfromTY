@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:onyoutube/model/rive_asset.dart';
 import 'package:rive/rive.dart';
+
+import '../model/rive_asset.dart';
 
 class SlideMenuTile extends StatelessWidget {
   const SlideMenuTile({

@@ -1,14 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:onyoutube/components/animated_bar.dart';
-import 'package:onyoutube/components/slide_menu.dart';
-import 'package:onyoutube/constants.dart';
-import 'package:onyoutube/model/menu_btn.dart';
-import 'package:onyoutube/model/rive_asset.dart';
-import 'package:onyoutube/rive_utils.dart';
-import 'package:onyoutube/screen/home/home_screen.dart';
-// import 'package:onyoutube/utils/rive_utils.dart';
 import 'package:rive/rive.dart';
+import 'components/animated_bar.dart';
+import 'components/slide_menu.dart';
+import 'constants.dart';
+import 'model/menu_btn.dart';
+import 'model/rive_asset.dart';
+import 'rive_utils.dart';
+import 'screen/home/home_screen.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});
@@ -82,7 +81,7 @@ class _EntryPointState extends State<EntryPoint>
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
             top: 16,
-            left: isSlideMenuClosed ? 0:220,
+            left: isSlideMenuClosed ? 0 : 220,
             child: MenuBtn(
               riveOnInit: (artboard) {
                 StateMachineController controller = RiveUtils.getRiveController(
@@ -108,7 +107,7 @@ class _EntryPointState extends State<EntryPoint>
         ],
       ),
       bottomNavigationBar: Transform.translate(
-        offset: Offset(0, 100*animation.value),
+        offset: Offset(0, 100 * animation.value),
         child: SafeArea(
           child: Container(
             padding: const EdgeInsets.all(12.0),
@@ -139,24 +138,28 @@ class _EntryPointState extends State<EntryPoint>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               AnimateBar(
-                                  isActive: bottomNavs[index] == selectedBottomNav),
+                                  isActive:
+                                      bottomNavs[index] == selectedBottomNav),
                               SizedBox(
                                   height: 36,
                                   width: 36,
                                   child: Opacity(
-                                    opacity: bottomNavs[index] == selectedBottomNav
-                                        ? 1
-                                        : 0.5,
+                                    opacity:
+                                        bottomNavs[index] == selectedBottomNav
+                                            ? 1
+                                            : 0.5,
                                     child: RiveAnimation.asset(
                                       bottomNavs.first.scr,
                                       artboard: bottomNavs[index].artboard,
                                       onInit: (artboard) {
                                         StateMachineController? controller =
-                                            RiveUtils.getRiveController(artboard,
-                                                stateMachineName: bottomNavs[index]
-                                                    .stateMachineName);
-                                        var input =
-                                            controller.findSMI('active') as SMIBool;
+                                            RiveUtils.getRiveController(
+                                                artboard,
+                                                stateMachineName:
+                                                    bottomNavs[index]
+                                                        .stateMachineName);
+                                        var input = controller.findSMI('active')
+                                            as SMIBool;
                                         if (bottomNavs[index].input == null) {
                                           bottomNavs[index].input = input;
                                         }

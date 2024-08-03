@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:onyoutube/model/course.dart';
-import 'package:onyoutube/screen/home/components/course_card.dart';
-import 'package:onyoutube/screen/home/components/second_course.dart';
+
+import '../../model/course.dart';
+import 'components/course_card.dart';
+import 'components/second_course.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

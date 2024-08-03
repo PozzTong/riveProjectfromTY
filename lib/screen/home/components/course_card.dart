@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onyoutube/model/course.dart';
+import '/model/course.dart';
 
 class CourseCard extends StatelessWidget {
   const CourseCard({super.key, required this.course});

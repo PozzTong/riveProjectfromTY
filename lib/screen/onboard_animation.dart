@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:onyoutube/screen/components/animation_btn.dart';
-import 'package:onyoutube/screen/components/sign_in_dialog.dart';
+
 import 'package:rive/rive.dart' as rive;
+
+import 'components/animation_btn.dart';
+import 'components/sign_in_dialog.dart';
 
 class OnboardAnimation extends StatefulWidget {
   const OnboardAnimation({super.key});

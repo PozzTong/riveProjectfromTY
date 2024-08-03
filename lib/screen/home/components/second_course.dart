@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onyoutube/model/course.dart';
+import '/model/course.dart';
 
 class SecondaryCourseCard extends StatelessWidget {
   const SecondaryCourseCard({super.key, required this.course});

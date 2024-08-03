@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onyoutube/screen/components/sign_in_form.dart';
+import 'sign_in_form.dart';
 
 Future<Object?> customSignInDialog(BuildContext context,
     {required ValueChanged onClose}) {

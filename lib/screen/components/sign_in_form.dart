@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onyoutube/entry_point.dart';
 import 'package:rive/rive.dart';
+
+import '../../entry_point.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({

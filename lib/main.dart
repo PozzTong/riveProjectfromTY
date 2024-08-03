@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onyoutube/screen/onboard_animation.dart';
+
+import 'screen/onboard_animation.dart';
 void main() {
   runApp(const MyApp());
 }
