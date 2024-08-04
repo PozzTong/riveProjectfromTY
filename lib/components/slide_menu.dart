@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 import '../model/rive_asset.dart';
-import '../rive_utils.dart';
+import '../model/rive_utils.dart';
 import 'info_card.dart';
 import 'slide_menu_tile.dart';
 
@@ -56,6 +56,7 @@ class _SlideMenuState extends State<SlideMenu> {
                       setState(() {
                         selectedMenu = menu;
                       });
+                    
                     },
                     isActive: selectedMenu == menu,
                   )),

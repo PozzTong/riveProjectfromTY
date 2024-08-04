@@ -40,7 +40,7 @@ class SlideMenuTile extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
             ),
-            // : SizedBox(),
+            
             ListTile(
               onTap: press,
               leading: SizedBox(

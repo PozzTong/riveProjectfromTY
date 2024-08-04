@@ -6,7 +6,7 @@ import 'components/slide_menu.dart';
 import 'constants.dart';
 import 'model/menu_btn.dart';
 import 'model/rive_asset.dart';
-import 'rive_utils.dart';
+import 'model/rive_utils.dart';
 import 'screen/home/home_screen.dart';
 
 class EntryPoint extends StatefulWidget {
@@ -19,6 +19,8 @@ class EntryPoint extends StatefulWidget {
 class _EntryPointState extends State<EntryPoint>
     with SingleTickerProviderStateMixin {
   RiveAssets selectedBottomNav = bottomNavs.first;
+  int _currentIndex = 0;
+  final PageController _pageController = PageController();
 
   late AnimationController _animationController;
   late Animation<double> animation;
@@ -44,7 +46,24 @@ class _EntryPointState extends State<EntryPoint>
   @override
   void dispose() {
     _animationController.dispose();
+    _pageController.dispose();
     super.dispose();
+  }
+
+  void _onNavItemTapped(int index) {
+    if (bottomNavs[index].input != null) {
+      bottomNavs[index].input!.change(true);
+      if (bottomNavs[index] != selectedBottomNav) {
+        setState(() {
+          _currentIndex = index;
+          selectedBottomNav = bottomNavs[index];
+        });
+        _pageController.jumpToPage(index);
+      }
+      Future.delayed(const Duration(seconds: 1), () {
+        bottomNavs[index].input!.change(false);
+      });
+    }
   }
 
   @override
@@ -64,19 +83,34 @@ class _EntryPointState extends State<EntryPoint>
             child: const SlideMenu(),
           ),
           Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(animation.value - 30 * animation.value * pi / 180),
-            child: Transform.translate(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateY(animation.value - 30 * animation.value * pi / 180),
+              child: Transform.translate(
                 offset: Offset(animation.value * 265, 0),
-                // offset: Offset(288,0),
                 child: Transform.scale(
                     scale: scalAnimation.value,
-                    child: const ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(24)),
-                        child: HomeScreen()))),
-          ),
+                    child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(24)),
+                        child: PageView(
+                          controller: _pageController,
+                          children: const [
+                            HomeScreen(),
+                            PageOne(),
+                            PageTwo(),
+                            PageThree(),
+                            PageFour()
+                          ],
+                          onPageChanged: (index) {
+                            setState(() {
+                              _currentIndex = index;
+                              selectedBottomNav = bottomNavs[index];
+                            });
+                          },
+                        ))),
+              )),
           AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
@@ -121,52 +155,46 @@ class _EntryPointState extends State<EntryPoint>
                 ...List.generate(
                     bottomNavs.length,
                     (index) => GestureDetector(
-                          onTap: () {
-                            if (bottomNavs[index].input != null) {
-                              bottomNavs[index].input!.change(true);
-                              if (bottomNavs[index] != selectedBottomNav) {
-                                setState(() {
-                                  selectedBottomNav = bottomNavs[index];
-                                });
-                              }
-                              Future.delayed(const Duration(seconds: 1), () {
-                                bottomNavs[index].input!.change(false);
-                              });
-                            }
-                          },
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              AnimateBar(
-                                  isActive:
-                                      bottomNavs[index] == selectedBottomNav),
-                              SizedBox(
-                                  height: 36,
-                                  width: 36,
-                                  child: Opacity(
-                                    opacity:
-                                        bottomNavs[index] == selectedBottomNav
-                                            ? 1
-                                            : 0.5,
-                                    child: RiveAnimation.asset(
-                                      bottomNavs.first.scr,
-                                      artboard: bottomNavs[index].artboard,
-                                      onInit: (artboard) {
-                                        StateMachineController? controller =
-                                            RiveUtils.getRiveController(
-                                                artboard,
-                                                stateMachineName:
-                                                    bottomNavs[index]
-                                                        .stateMachineName);
-                                        var input = controller.findSMI('active')
-                                            as SMIBool;
-                                        if (bottomNavs[index].input == null) {
-                                          bottomNavs[index].input = input;
-                                        }
-                                      },
-                                    ),
-                                  )),
-                            ],
+                          onTap: () => _onNavItemTapped(index),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              // color: index == _currentIndex
+                              //     ? Colors.blue.withOpacity(0.1)
+                              //     : Colors.transparent,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AnimateBar(isActive: index == _currentIndex),
+                                SizedBox(
+                                    height: 36,
+                                    width: 36,
+                                    child: Opacity(
+                                      opacity: index == _currentIndex ? 1 : 0.5,
+                                      child: RiveAnimation.asset(
+                                        bottomNavs.first.scr,
+                                        artboard: bottomNavs[index].artboard,
+                                        onInit: (artboard) {
+                                          StateMachineController? controller =
+                                              RiveUtils.getRiveController(
+                                                  artboard,
+                                                  stateMachineName:
+                                                      bottomNavs[index]
+                                                          .stateMachineName);
+                                          var input = controller
+                                              .findSMI('active') as SMIBool;
+                                          if (bottomNavs[index].input == null) {
+                                            bottomNavs[index].input = input;
+                                          }
+                                        },
+                                      ),
+                                    )),
+                              ],
+                            ),
                           ),
                         ))
               ],
@@ -174,6 +202,54 @@ class _EntryPointState extends State<EntryPoint>
           ),
         ),
       ),
+    );
+  }
+}
+
+class PageOne extends StatelessWidget {
+  const PageOne({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Page One')),
+      body: const Center(child: Text('This is Page One')),
+    );
+  }
+}
+
+class PageTwo extends StatelessWidget {
+  const PageTwo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Page Two')),
+      body: const Center(child: Text('This is Page Two')),
+    );
+  }
+}
+
+class PageThree extends StatelessWidget {
+  const PageThree({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Page Three')),
+      body: const Center(child: Text('This is Page Three')),
+    );
+  }
+}
+
+class PageFour extends StatelessWidget {
+  const PageFour({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Page Four')),
+      body: const Center(child: Text('This is Page Four')),
     );
   }
 }

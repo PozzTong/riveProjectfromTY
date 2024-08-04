@@ -111,13 +111,11 @@ Future<Object?> customSignInDialog(BuildContext context,
                 child: CircleAvatar(
                   radius: 16,
                   backgroundColor: Colors.white,
-                  child: Center(
-                    child: IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
+                  child: IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ),
               ),
