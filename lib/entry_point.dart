@@ -102,10 +102,10 @@ class _EntryPointState extends State<EntryPoint>
                           controller: _pageController,
                           children: const [
                             HomeScreen(),
+                            PageFour(),
                             PageOne(),
                             PageTwo(),
                             PageThree(),
-                            PageFour()
                           ],
                           onPageChanged: (index) {
                             setState(() {

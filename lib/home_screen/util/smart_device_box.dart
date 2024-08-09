@@ -23,14 +23,14 @@ class SmartDeviceBox extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: BoxDecoration(
-              color:powerOn ? Colors.grey[600]:Colors.grey[200], 
+              color: powerOn ? Colors.grey[600] : Colors.grey[200],
               borderRadius: BorderRadius.circular(12)),
           padding: const EdgeInsets.symmetric(vertical: 25),
           child: Column(
             children: [
               Image.asset(
                 iconPath,
-                color: powerOn ? Colors.white:Colors.black,
+                color: powerOn ? Colors.white : Colors.black,
                 height: 65,
               ),
               Row(
@@ -38,12 +38,15 @@ class SmartDeviceBox extends StatelessWidget {
                   Expanded(
                       child: Text(
                     smartDeviceName,
-                    style: TextStyle(color: powerOn ? Colors.white:Colors.black,
-                        fontSize: 13, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: powerOn ? Colors.white : Colors.black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
                   )),
                   Transform.rotate(
                     angle: pi / 2,
-                    child: CupertinoSwitch(value: powerOn, onChanged: onChanged),
+                    child:
+                        CupertinoSwitch(value: powerOn, onChanged: onChanged),
                   )
                 ],
               )

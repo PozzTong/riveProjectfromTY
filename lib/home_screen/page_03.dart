@@ -11,7 +11,7 @@ class _PageThreeState extends State<PageThree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Page Three')),
+     
       body: const Center(child: Text('This is Page Three')),
     );
   }
