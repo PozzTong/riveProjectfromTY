@@ -4,6 +4,10 @@ import 'package:rive/rive.dart';
 import 'components/animated_bar.dart';
 import 'components/slide_menu.dart';
 import 'constants.dart';
+import 'home_screen/page_01.dart';
+import 'home_screen/page_02.dart';
+import 'home_screen/page_03.dart';
+import 'home_screen/page_04.dart';
 import 'model/menu_btn.dart';
 import 'model/rive_asset.dart';
 import 'model/rive_utils.dart';
@@ -202,54 +206,6 @@ class _EntryPointState extends State<EntryPoint>
           ),
         ),
       ),
-    );
-  }
-}
-
-class PageOne extends StatelessWidget {
-  const PageOne({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Page One')),
-      body: const Center(child: Text('This is Page One')),
-    );
-  }
-}
-
-class PageTwo extends StatelessWidget {
-  const PageTwo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Page Two')),
-      body: const Center(child: Text('This is Page Two')),
-    );
-  }
-}
-
-class PageThree extends StatelessWidget {
-  const PageThree({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Page Three')),
-      body: const Center(child: Text('This is Page Three')),
-    );
-  }
-}
-
-class PageFour extends StatelessWidget {
-  const PageFour({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Page Four')),
-      body: const Center(child: Text('This is Page Four')),
     );
   }
 }

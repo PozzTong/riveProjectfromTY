@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-
 import '../model/rive_asset.dart';
 import '../model/rive_utils.dart';
 import 'info_card.dart';
