@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screen/onboard_animation.dart';
+import 'pro1/screen/onboard_animation.dart';
 void main() {
   runApp(const MyApp());
 }

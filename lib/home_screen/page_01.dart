@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import '../pro1/constants.dart';
 
-class PageOne extends StatefulWidget {
+class PageOne extends StatelessWidget {
   const PageOne({super.key});
 
   @override
-  State<PageOne> createState() => _PageOneState();
-}
-
-class _PageOneState extends State<PageOne> {
-  @override
   Widget build(BuildContext context) {
+    // this.context =context
     return Scaffold(
-     
-      body: const Center(child: Text('This is Page Onces')),
+     appBar: AppBar(),
     );
   }
+
+  
 }

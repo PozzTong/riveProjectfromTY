@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'util/smart_device_box.dart';
+import '../pro1/util/smart_device_box.dart';
 
 class PageFour extends StatefulWidget {
   const PageFour({super.key});
