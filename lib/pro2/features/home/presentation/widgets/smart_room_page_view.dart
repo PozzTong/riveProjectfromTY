@@ -8,37 +8,45 @@ class SmartRoomsPageView extends StatelessWidget {
   const SmartRoomsPageView({
     super.key,
     required this.controller,
+    required this.pageListener,
   });
 
   final PageController controller;
+  final ValueNotifier pageListener;
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: controller,
-      clipBehavior: Clip.none,
-      itemCount: SmartRoom.fakeValues.length,
-      itemBuilder: (_, index) {
-        final room = SmartRoom.fakeValues[index];
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: RoomCard(
-            percent: 0,
-            expand: false,
-            room: room,
-            onSwipeUp: () {},
-            onSwipeDown: () {},
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RoomDetailScreen(room: room),
-                ),
-              );
-            },
-          ),
+    return ValueListenableBuilder(
+      valueListenable: pageListener,
+      builder: (_,page,__) {
+        return PageView.builder(
+          controller: controller,
+          clipBehavior: Clip.none,
+          itemCount: SmartRoom.fakeValues.length,
+          itemBuilder: (_, index) {
+            final room = SmartRoom.fakeValues[index];
+            double percent = page - index;
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: RoomCard(
+                percent: percent,
+                expand: false,
+                room: room,
+                onSwipeUp: () {},
+                onSwipeDown: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RoomDetailScreen(room: room),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
         );
-      },
+      }
     );
   }
 }
