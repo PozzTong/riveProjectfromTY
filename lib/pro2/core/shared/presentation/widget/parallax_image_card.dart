@@ -12,7 +12,7 @@ class ParallaxImageCard extends StatelessWidget {
   final double parallaxValue;
 
   BoxDecoration get _perallaxUrlImageDecoration => BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
         color: SHColors.hintColor,
         boxShadow: const [
           BoxShadow(
@@ -49,3 +49,4 @@ class ParallaxImageCard extends StatelessWidget {
     );
   }
 }
+//6:50

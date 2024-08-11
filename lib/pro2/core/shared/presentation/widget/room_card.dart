@@ -1,11 +1,11 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:onyoutube/pro2/features/smart_room/screen/room_detail_screen.dart';
 import 'package:ui_common/ui_common.dart';
-
 import '../../../../features/home/presentation/widgets/background_room_lights.dart';
 import '../../../theme/sh_color.dart';
 import '../../../theme/sh_icons.dart';
 import '../../domain/entities/smart_room.dart';
-
 import 'animated_upward_arrows.dart';
 import 'parallax_image_card.dart';
 
@@ -39,33 +39,54 @@ class RoomCard extends StatelessWidget {
           // -----------------------------------------------
           // Background information card
           // -----------------------------------------------
-          Padding(
-            padding: const EdgeInsets.only(bottom: 180),
-            child: BackgroundRoomCard(room: room, translation: value),
+          Transform.scale(
+            scale: lerpDouble(0.8, 1.2, value),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 180),
+              child: BackgroundRoomCard(room: room, translation: value),
+            ),
           ),
           // -----------------------------------------------
           // Room image card with parallax effect
           // -----------------------------------------------
           Padding(
             padding: const EdgeInsets.only(bottom: 200),
-            child: GestureDetector(
-              onTap: onTap,
-              onVerticalDragUpdate: (details) {
-                if (details.primaryDelta! < -10) onSwipeUp();
-                if (details.primaryDelta! > 10) onSwipeDown();
-              },
-              child: Stack(
-                fit: StackFit.expand,
-                clipBehavior: Clip.none,
-                children: [
-                  ParallaxImageCard(
-                    imageUrl: room.imageUrl,
-                    parallaxValue: percent,
+            child: Transform(
+              transform: Matrix4.translationValues(0, -90 * value, 0),
+              child: GestureDetector(
+                onTap: onTap,
+                onVerticalDragUpdate: (details) {
+                  if (details.primaryDelta! < -10) onSwipeUp();
+                  if (details.primaryDelta! > 10) onSwipeDown();
+                },
+                child: Hero(
+                  tag: room.id,
+                  flightShuttleBuilder: (_, animation, __, ___, ____) {
+                    return AnimatedBuilder(
+                      animation: animation,
+                      builder: (_,child) {
+                        return RoomDetailItems(
+                            room: room, 
+                            topPadding: context.mediaQuery.padding.top,
+                            animation: animation,
+                            );
+                      }
+                    );
+                  },
+                  child: Stack(
+                    fit: StackFit.expand,
+                    clipBehavior: Clip.none,
+                    children: [
+                      ParallaxImageCard(
+                        imageUrl: room.imageUrl,
+                        parallaxValue: percent,
+                      ),
+                      VerticalRoomTitle(room: room),
+                      const CameraIconButton(),
+                      const AnimatedUpwardArrows()
+                    ],
                   ),
-                  VerticalRoomTitle(room: room),
-                  const CameraIconButton(),
-                  const AnimatedUpwardArrows()
-                ],
+                ),
               ),
             ),
           ),

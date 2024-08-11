@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final controller = PageController(viewportFraction: 0.8);
   final ValueNotifier<double> pageNotifier = ValueNotifier(0);
+  final ValueNotifier<int> roomSelectNotifier = ValueNotifier(-1);
 
   @override
   void initState() {
@@ -46,20 +47,24 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const SizedBox(height: 24),
-              Text("SELECT A ROOM", style: context.bodyLarge),
+              Text("SELECTED A ROOM", style: context.bodyLarge),
               height32,
               Expanded(
                 child: Stack(
                   fit: StackFit.expand,
                   clipBehavior: Clip.none,
                   children: [
-                    SmartRoomsPageView(controller: controller, pageListener: pageNotifier,),
-                    const Positioned.fill(
+                    SmartRoomsPageView(
+                      controller: controller,
+                      pageListener: pageNotifier,
+                      roomSelectNotifier: roomSelectNotifier,
+                    ),
+                    Positioned.fill(
                       top: null,
                       child: Column(
                         children: [
-                          PageIndicators(),
-                          SmHomeBottomNavigationBar(),
+                          PageIndicators(selectedRoomNotifier: roomSelectNotifier, pageNotifier: pageNotifier,),
+                          SmHomeBottomNavigationBar(selectedRoomNotifier: roomSelectNotifier,),
                         ],
                       ),
                     ),

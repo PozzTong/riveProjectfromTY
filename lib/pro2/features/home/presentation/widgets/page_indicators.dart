@@ -6,16 +6,31 @@ import '../../../../core/theme/sh_color.dart';
 class PageIndicators extends StatelessWidget {
   const PageIndicators({
     super.key,
+    required this.selectedRoomNotifier, required this.pageNotifier,
   });
+  final ValueNotifier selectedRoomNotifier, pageNotifier;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: PageViewIndicators(
-        length: SmartRoom.fakeValues.length,
-        pageIndex: 2,
-      ),
-    );
+    return ValueListenableBuilder(
+        valueListenable: selectedRoomNotifier,
+        builder: (_, selectedRoom, __) {
+          return AnimatedOpacity(
+            duration: const Duration(microseconds: 100),
+            opacity: selectedRoom == -1 ? 1 : 0,
+            child: Center(
+              child: ValueListenableBuilder(
+                valueListenable: pageNotifier,
+                builder: (_,pageIndex,__) {
+                  return PageViewIndicators(
+                    length: SmartRoom.fakeValues.length,
+                    pageIndex: pageIndex,
+                  );
+                }
+              ),
+            ),
+          );
+        });
   }
 }
 
