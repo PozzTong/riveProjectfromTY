@@ -100,12 +100,48 @@ class _AirIcons extends StatelessWidget {
   }
 }
 
-class _AirSwitcher extends StatelessWidget {
+class _AirSwitcher extends StatefulWidget {
   const _AirSwitcher({
     required this.room,
   });
 
   final SmartRoom room;
+
+  @override
+  State<_AirSwitcher> createState() => _AirSwitcherState();
+}
+
+class _AirSwitcherState extends State<_AirSwitcher> {
+  late bool airOn;
+  late double temperature;
+
+  @override
+  void initState() {
+    super.initState();
+    airOn = widget.room.airCondition.isOn;
+    temperature = widget.room.airCondition.value.toDouble();
+
+    // Ensure the temperature is within the slider's range
+    if (temperature < 16.0) {
+      temperature = 16.0;
+    } else if (temperature > 30.0) {
+      temperature = 30.0;
+    }
+  }
+
+  void _toggleAir(bool value) {
+    setState(() {
+      airOn = value;
+      widget.room.airCondition.isOn == value;
+    });
+  }
+
+  void _updateTemperature(double value) {
+    setState(() {
+      temperature = value;
+      widget.room.airCondition.value == value.toInt();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,17 +155,27 @@ class _AirSwitcher extends StatelessWidget {
             Expanded(
               child: SHSwitcher(
                 icon: const Icon(SHIcons.fan),
-                value: room.airCondition.isOn,
-                onChanged: (value) {},
+                value: airOn,
+                onChanged: _toggleAir,
               ),
             ),
             const Spacer(),
             Text(
-              '${room.airCondition.value}˚',
+              '${temperature.toInt()}˚',
               style: const TextStyle(fontSize: 28),
-            )
+            ),
           ],
-        )
+        ),
+        const SizedBox(height: 12),
+        Slider(
+          value: temperature,
+          min: 16.0,
+          max: 30.0,
+          divisions: 14,
+          onChanged: airOn ? _updateTemperature : null,
+          activeColor: SHColors.selectedColor,
+          inactiveColor: Colors.grey,
+        ),
       ],
     );
   }

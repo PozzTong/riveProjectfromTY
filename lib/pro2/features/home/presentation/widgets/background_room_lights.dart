@@ -8,7 +8,7 @@ import '../../../../core/shared/presentation/widget/sh_divider.dart';
 import '../../../../core/theme/sh_color.dart';
 import '../../../../core/theme/sh_icons.dart';
 
-class BackgroundRoomCard extends StatelessWidget {
+class BackgroundRoomCard extends StatefulWidget {
   const BackgroundRoomCard({
     required this.room,
     required this.translation,
@@ -19,9 +19,38 @@ class BackgroundRoomCard extends StatelessWidget {
   final double translation;
 
   @override
+  State<BackgroundRoomCard> createState() => _BackgroundRoomCardState();
+}
+
+class _BackgroundRoomCardState extends State<BackgroundRoomCard> {
+  late SmartRoom room;
+
+  @override
+  void initState() {
+    super.initState();
+    room = widget.room; // Initialize with the provided SmartRoom
+  }
+
+  void _toggleDevice(String device) {
+    setState(() {
+      switch (device) {
+        case 'lights':
+          room.lights.isOn == !room.lights.isOn;
+          break;
+        case 'airConditioning':
+          room.airCondition.isOn == !room.airCondition.isOn;
+          break;
+        case 'music':
+          room.musicInfo.isOn == !room.musicInfo.isOn;
+          break;
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Transform(
-      transform: Matrix4.translationValues(0, 80 * translation, 0),
+      transform: Matrix4.translationValues(0, 80 * widget.translation, 0),
       child: DecoratedBox(
         decoration: const BoxDecoration(
           color: SHColors.cardColor,
@@ -63,19 +92,19 @@ class BackgroundRoomCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _DeviceIconSwitcher(
-                    onTap: (value) {},
+                    onTap: (value) => _toggleDevice('lights'),
                     icon: const Icon(SHIcons.lightBulbOutline),
                     label: const Text('Lights'),
                     value: room.lights.isOn,
                   ),
                   _DeviceIconSwitcher(
-                    onTap: (value) {},
+                    onTap: (value) => _toggleDevice('airConditioning'),
                     icon: const Icon(SHIcons.fan),
                     label: const Text('Air-conditioning'),
                     value: room.airCondition.isOn,
                   ),
                   _DeviceIconSwitcher(
-                    onTap: (value) {},
+                    onTap: (value) => _toggleDevice('music'),
                     icon: const Icon(SHIcons.music),
                     label: const Text('Music'),
                     value: room.musicInfo.isOn,

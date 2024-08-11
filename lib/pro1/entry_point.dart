@@ -11,7 +11,7 @@ import '../home_screen/page_04.dart';
 import 'model/menu_btn.dart';
 import 'model/rive_asset.dart';
 import 'model/rive_utils.dart';
-import 'screen/home/home_screen.dart';
+import 'screen/home/screen/home_screen.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});

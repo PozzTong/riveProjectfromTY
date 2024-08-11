@@ -43,6 +43,7 @@ class _PageFourState extends State<PageFour> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Room'),),
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Column(
